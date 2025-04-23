@@ -1,17 +1,3 @@
-<%
-    String error = request.getParameter("error");
-    String success = request.getParameter("success");
-
-    if (error != null) {
-        if (error.equals("1")) {
-            out.println("<div class='alert alert-danger'>Registration failed. Please try again.</div>");
-        }
-    }
-
-    if (success != null && success.equals("1")) {
-        out.println("<div class='alert alert-success'>Registration successful! Please login.</div>");
-    }
-%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -61,13 +47,60 @@
             background-color: #b71c1c; /* Darker red on hover */
         }
         .alert {
-            margin-top: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            padding: 10px 15px;
+        }
+        .alert-danger {
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+        .alert-success {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
         }
     </style>
 </head>
 <body>
     <div class="login-container">
         <h2>Login to Your Account</h2>
+        
+        <%
+        String error = request.getParameter("error");
+        if (error != null) {
+            String errorMessage = "";
+            switch(error) {
+                case "empty":
+                    errorMessage = "Please enter both username and password.";
+                    break;
+                case "invalid":
+                    errorMessage = "Invalid username or password.";
+                    break;
+                case "database":
+                    errorMessage = "Database error occurred. Please try again later.";
+                    break;
+                default:
+                    errorMessage = "An error occurred. Please try again.";
+            }
+        %>
+            <div class="alert alert-danger">
+                <%= errorMessage %>
+            </div>
+        <%
+        }
+        
+        String success = request.getParameter("success");
+        if (success != null && success.equals("registered")) {
+        %>
+            <div class="alert alert-success">
+                Registration successful! Please login with your credentials.
+            </div>
+        <%
+        }
+        %>
+
         <form id="loginForm" action="LoginServlet" method="post">
             <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
@@ -79,11 +112,9 @@
             </div>
             <button type="submit" class="btn btn-primary">Login</button>
         </form>
-        <div id="loginMessage" class="alert" style="display: none;"></div>
         <p class="text-center mt-3">Don't have an account? <a href="register.jsp">Register here</a></p>
     </div>
 
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

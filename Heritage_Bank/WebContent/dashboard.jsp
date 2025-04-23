@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.util.*" %>
+<%@ page import="com.netbanking.DBConnection" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,16 +60,11 @@
         return;
     }
 
-    // Database connection details
-    String url = "jdbc:mysql://localhost:3306/bankdb";
-    String user = "root";
-    String password = "123456";
-    
     String fullName = "";
     double balance = 0.00;
     List<Map<String, String>> transactions = new ArrayList<>();
 
-    try (Connection conn = DriverManager.getConnection(url, user, password)) {
+    try (Connection conn = DBConnection.getConnection()) {
         // Fetch user details
         String userQuery = "SELECT full_name, balance FROM users WHERE u_id = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(userQuery)) {

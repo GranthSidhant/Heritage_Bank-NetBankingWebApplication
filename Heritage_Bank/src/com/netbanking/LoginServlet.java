@@ -20,6 +20,12 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
+        // Basic validation
+        if (username == null || username.trim().isEmpty() || password == null || password.trim().isEmpty()) {
+            response.sendRedirect("login.jsp?error=empty");
+            return;
+        }
+
         String query = "SELECT * FROM users WHERE username = ? AND password = ?";
 
         try (Connection conn = DBConnection.getConnection();
@@ -30,40 +36,25 @@ public class LoginServlet extends HttpServlet {
 
             ResultSet rs = pstmt.executeQuery();
 
-            
-            HttpSession session = request.getSession();
-
-         // Fetch user details from the database
-         if (rs.next()) {  // Assuming you have executed a query to fetch user details
-             int userId = rs.getInt("u_id");  // Fetch user ID
-             String userName = rs.getString("username");
-
-             session.setAttribute("u_id", userId); // ✅ Store user ID
-             session.setAttribute("username", userName); // ✅ Store username separately
-
-             response.sendRedirect("dashboard.jsp"); // Redirect to dashboard or home page
-         } else {
-             response.sendRedirect("login.jsp?error=Invalid credentials"); // Redirect if login fails
-         }
-
-            
-            
-            
-            
-            
-//            if (rs.next()) {
-//                // Login successful
-//                HttpSession session = request.getSession();
-//                session.setAttribute("username", username);
-//                response.sendRedirect("dashboard.jsp?success=1"); // Redirect to login with success message
-//            } else {
-//                // Login failed
-//                response.sendRedirect("login.jsp?error=1"); // Redirect with error
-//            }
+            if (rs.next()) {
+                // Login successful
+                HttpSession session = request.getSession();
+                int userId = rs.getInt("u_id");
+                String userName = rs.getString("username");
+                
+                session.setAttribute("u_id", userId);
+                session.setAttribute("username", userName);
+                
+                response.sendRedirect("dashboard.jsp");
+            } else {
+                // Invalid credentials
+                response.sendRedirect("login.jsp?error=invalid");
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
-            response.sendRedirect("login.jsp?error=1"); // Redirect with generic error
+            // Database error
+            response.sendRedirect("login.jsp?error=database");
         }
     }
 }

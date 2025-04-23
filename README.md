@@ -94,16 +94,31 @@ HeritageBank-NetBankingWebApplication/
 ### Database Schema
 
 The application uses the following tables:
-- `users` - Stores user information and credentials
-- `accounts` - Manages bank account details and balances
-- `transactions` - Records all banking transactions
-- `fixed_deposits` - Tracks fixed deposit investments
+- `users` - Stores user information including:
+  - User ID (u_id)
+  - Full Name
+  - Email
+  - Username
+  - Password
+  - Balance
+  - Created At timestamp
+
+- `transactions` - Records all banking transactions:
+  - Transaction ID
+  - User ID (u_id)
+  - Type (DEPOSIT/WITHDRAWAL)
+  - Amount
+  - Description
+  - Transaction Date
 
 The `heritage_bank.sql` file includes:
-- Complete database schema
+- Complete database schema creation
+- Table structures with proper constraints
+- Foreign key relationships
 - Sample data for testing
 - Performance optimization indexes
 - Transaction validation triggers
+
 
 ## Setup Instructions
 
@@ -141,16 +156,23 @@ The `heritage_bank.sql` file includes:
 
 ## Features
 
-- User Registration and Login
-- Account Dashboard
-- Deposit and Withdrawal Operations
-- Fixed Deposit Registration
-- EMI Calculator
-- FD Calculator
-- Currency Converter
-- Passbook View
+- User Authentication
+  - Secure login system
+  - Input validation
+  - Error handling with user-friendly messages
+- Dashboard
+  - Account balance display
+  - Recent transactions view
+  - Quick action buttons
+- Transaction Management
+  - Deposit funds
+  - Withdraw funds
+  - Transaction history
 - User Profile Management
-- Contact and Support
+- Financial Tools
+  - EMI Calculator
+  - Fixed Deposit Calculator
+  - Currency Converter
 
 ## Screenshots
 
