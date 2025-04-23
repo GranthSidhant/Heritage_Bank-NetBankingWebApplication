@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="HeritageBank-NetBankingWebApplication">
+        <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <property name="context-root" value="NetBanking_Web_Application"/>
+        <property name="java-output-path" value="/HeritageBank-NetBankingWebApplication/build/classes"/>
+    </wb-module>
+</project-modules>
